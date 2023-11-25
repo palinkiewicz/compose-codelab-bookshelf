@@ -1,5 +1,7 @@
 package pl.dakil.bookshelf.ui.components
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +49,15 @@ fun SearchBarView(
     val history =
         remember { mutableStateListOf<String>() } // TODO: Make search history save locally
 
+    val barHorizontalPadding by animateDpAsState(
+        targetValue = if (active) {
+            dimensionResource(R.dimen.search_bar_active_horizontal_padding)
+        } else {
+            dimensionResource(R.dimen.search_bar_inactive_horizontal_padding)
+        },
+        animationSpec = tween(durationMillis = 500)
+    )
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -55,6 +66,7 @@ fun SearchBarView(
         SearchBar(
             modifier = Modifier
                 .align(Alignment.TopCenter)
+                .padding(horizontal = barHorizontalPadding)
                 .semantics { traversalIndex = -1f },
             query = searchValue,
             onQueryChange = onSearchInput,
