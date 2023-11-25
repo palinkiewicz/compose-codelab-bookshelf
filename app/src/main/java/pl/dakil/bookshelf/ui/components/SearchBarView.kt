@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.History
@@ -45,6 +47,36 @@ fun SearchBarView(
     placeholder: @Composable () -> Unit = {},
     content: @Composable () -> Unit
 ) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .semantics { isTraversalGroup = true }
+    ) {
+        SearchField(
+            searchValue = searchValue,
+            onSearchInput = onSearchInput,
+            onSearch = onSearch,
+            placeholder = placeholder,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
+        Column(
+            modifier = Modifier
+                .padding(top = SearchBarDefaults.InputFieldHeight + dimensionResource(R.dimen.search_view_additional_padding))
+        ) {
+            content()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchField(
+    searchValue: String,
+    onSearchInput: (String) -> Unit,
+    onSearch: () -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: @Composable () -> Unit = {},
+) {
     var active by rememberSaveable { mutableStateOf(false) }
     val history =
         remember { mutableStateListOf<String>() } // TODO: Make search history save locally
@@ -58,56 +90,63 @@ fun SearchBarView(
         animationSpec = tween(durationMillis = 500)
     )
 
-    Box(
+    val search = {
+        if (searchValue.trim() != "") {
+            history.remove(searchValue)
+            history.add(searchValue)
+            onSearch()
+        }
+        active = false
+    }
+
+    SearchBar(
         modifier = modifier
-            .fillMaxSize()
-            .semantics { isTraversalGroup = true }
-    ) {
-        SearchBar(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(horizontal = barHorizontalPadding)
-                .semantics { traversalIndex = -1f },
-            query = searchValue,
-            onQueryChange = onSearchInput,
-            onSearch = {
-                if (searchValue.trim() != "") {
-                    history.remove(searchValue)
-                    history.add(searchValue)
-                    onSearch()
-                }
-                active = false
-            },
-            active = active,
-            onActiveChange = { active = it },
-            leadingIcon = {
-                IconButton(
-                    onClick = { if (active) active = false }
-                ) {
-                    Icon(
-                        imageVector = if (active) Icons.Default.ArrowBack else Icons.Default.Search,
-                        contentDescription = if (active) stringResource(R.string.back) else null
-                    )
-                }
-            },
-            placeholder = placeholder
-        ) {
-            history.reversed().forEach { historyRecord ->
-                ListItem(
-                    headlineContent = { Text(historyRecord) },
-                    leadingContent = { Icon(Icons.Filled.History, contentDescription = null) },
-                    modifier = Modifier
-                        .clickable {
-                            onSearchInput(historyRecord)
-                            active = false
-                        }
-                        .fillMaxWidth()
+            .padding(horizontal = barHorizontalPadding)
+            .semantics { traversalIndex = -1f },
+        query = searchValue,
+        onQueryChange = onSearchInput,
+        onSearch = { search() },
+        active = active,
+        onActiveChange = { active = it },
+        leadingIcon = {
+            IconButton(
+                onClick = { active = !active }
+            ) {
+                Icon(
+                    imageVector = if (active) Icons.Default.ArrowBack else Icons.Default.Search,
+                    contentDescription = if (active) stringResource(R.string.back) else null
                 )
             }
+        },
+        placeholder = placeholder
+    ) {
+        SearchFieldHistory(
+            history = history,
+            onHistoryItemClick = {
+                onSearchInput(it)
+                search()
+            }
+        )
+    }
+}
+
+@Composable
+fun SearchFieldHistory(
+    history: List<String>,
+    onHistoryItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState())
+    ) {
+        history.reversed().forEach { historyRecord ->
+            ListItem(
+                headlineContent = { Text(historyRecord) },
+                leadingContent = { Icon(Icons.Filled.History, contentDescription = null) },
+                modifier = Modifier
+                    .clickable { onHistoryItemClick(historyRecord) }
+                    .fillMaxWidth()
+            )
         }
-        Column(
-            modifier = Modifier
-                .padding(top = SearchBarDefaults.InputFieldHeight + dimensionResource(R.dimen.search_view_additional_padding))
-        ) { content() }
     }
 }
