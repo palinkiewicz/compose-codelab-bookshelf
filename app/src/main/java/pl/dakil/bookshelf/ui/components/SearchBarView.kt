@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -61,6 +63,7 @@ fun SearchBarView(
         )
         Column(
             modifier = Modifier
+                .statusBarsPadding()
                 .padding(top = SearchBarDefaults.InputFieldHeight + dimensionResource(R.dimen.search_view_additional_padding))
         ) {
             content()
@@ -139,6 +142,7 @@ fun SearchFieldHistory(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
+            .imePadding()
     ) {
         history.reversed().forEach { historyRecord ->
             ListItem(

@@ -5,10 +5,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
@@ -83,6 +87,9 @@ fun VolumeListGrid(
     ) {
         items(uiState.items) { book ->
             BookCard(book = book, onClick = onListItemClick)
+        }
+        item(span = StaggeredGridItemSpan.FullLine) {
+            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }
     }
 }
