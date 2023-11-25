@@ -1,12 +1,11 @@
 package pl.dakil.bookshelf.ui.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +20,7 @@ import coil.request.ImageRequest
 import pl.dakil.bookshelf.R
 import pl.dakil.bookshelf.data.model.Book
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookCard(
     book: Book,
@@ -30,9 +30,8 @@ fun BookCard(
     val imageUrl = book.volumeInfo.imageLinks?.thumbnail?.replace("http:", "https:")
 
     Card(
-        modifier = modifier.clickable {
-            onClick(book.id)
-        }
+        modifier = modifier,
+        onClick = { onClick(book.id) }
     ) {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
@@ -40,11 +39,11 @@ fun BookCard(
                 .crossfade(true)
                 .build(),
             contentDescription = null,
-            error = painterResource(R.drawable.ic_error_outline),
+            error = painterResource(R.drawable.ic_no_image),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(0.7f)
+//                .aspectRatio(0.7f)
         )
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.volume_card_data_padding))) {
             Text(
