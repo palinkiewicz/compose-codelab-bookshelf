@@ -90,13 +90,16 @@ fun SearchField(
         animationSpec = tween(durationMillis = 500)
     )
 
-    val search = {
-        if (searchValue.trim() != "") {
-            history.remove(searchValue)
-            history.add(searchValue)
+    fun search(value: String) {
+        val trimmed = value.trim()
+        onSearchInput(trimmed)
+        active = false
+
+        if (trimmed != "") {
+            history.remove(trimmed)
+            history.add(trimmed)
             onSearch()
         }
-        active = false
     }
 
     SearchBar(
@@ -105,7 +108,7 @@ fun SearchField(
             .semantics { traversalIndex = -1f },
         query = searchValue,
         onQueryChange = onSearchInput,
-        onSearch = { search() },
+        onSearch = { search(it) },
         active = active,
         onActiveChange = { active = it },
         leadingIcon = {
@@ -122,10 +125,7 @@ fun SearchField(
     ) {
         SearchFieldHistory(
             history = history,
-            onHistoryItemClick = {
-                onSearchInput(it)
-                search()
-            }
+            onHistoryItemClick = { search(it) }
         )
     }
 }
@@ -137,7 +137,8 @@ fun SearchFieldHistory(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState())
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
     ) {
         history.reversed().forEach { historyRecord ->
             ListItem(
