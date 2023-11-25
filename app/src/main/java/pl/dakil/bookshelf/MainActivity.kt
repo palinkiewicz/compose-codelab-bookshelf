@@ -3,6 +3,7 @@ package pl.dakil.bookshelf
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Surface
 import pl.dakil.bookshelf.ui.BookshelfApp
 import pl.dakil.bookshelf.ui.theme.BookshelfTheme
 
@@ -12,7 +13,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             BookshelfTheme {
 //                TODO: Responsiveness
-                BookshelfApp()
+                Surface {
+                    BookshelfApp()
+                }
             }
         }
     }
