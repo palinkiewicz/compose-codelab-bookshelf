@@ -1,7 +1,5 @@
 package pl.dakil.bookshelf.data.model
 
-import java.util.Date
-
 data class Book (
     val id: String,
     val volumeInfo: VolumeInfo
@@ -9,12 +7,12 @@ data class Book (
 
 data class VolumeInfo (
     val title: String,
-    val authors: List<String>,
+    val authors: List<String>?,
     val publisher: String,
-    val publishedDate: Date,
+    val publishedDate: String,
     val description: String,
     val language: String,
-    val imageLinks: ImageLinks
+    val imageLinks: ImageLinks?
 )
 
 data class ImageLinks (
