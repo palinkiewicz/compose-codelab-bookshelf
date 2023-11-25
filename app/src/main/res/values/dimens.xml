@@ -5,10 +5,10 @@
 
     <dimen name="search_view_additional_padding">16dp</dimen>
     <dimen name="search_bar_active_horizontal_padding">0dp</dimen>
-    <dimen name="search_bar_inactive_horizontal_padding">8dp</dimen>
+    <dimen name="search_bar_inactive_horizontal_padding">12dp</dimen>
 
     <dimen name="volume_list_item_size">130dp</dimen>
-    <dimen name="volume_list_item_spacing">16dp</dimen>
+    <dimen name="volume_list_item_spacing">12dp</dimen>
     <dimen name="volume_list_content_padding">16dp</dimen>
 
     <dimen name="volume_card_data_padding">16dp</dimen>
