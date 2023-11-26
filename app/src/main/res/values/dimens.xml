@@ -13,4 +13,10 @@
 
     <dimen name="volume_card_data_padding">16dp</dimen>
     <dimen name="volume_card_data_between_padding">4dp</dimen>
+
+    <dimen name="volume_details_padding">16dp</dimen>
+
+    <dimen name="volume_info_card_padding">16dp</dimen>
+    <dimen name="volume_info_card_text_padding">8dp</dimen>
+    <dimen name="volume_info_card_buttons_padding">16dp</dimen>
 </resources>

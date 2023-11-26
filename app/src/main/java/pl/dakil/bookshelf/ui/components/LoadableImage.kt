@@ -1,5 +1,6 @@
 package pl.dakil.bookshelf.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +42,7 @@ fun LoadableImage(
         },
         error = {
             Column(
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.volume_card_data_padding)))
