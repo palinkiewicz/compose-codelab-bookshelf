@@ -34,7 +34,7 @@ class VolumeListViewModel(private val bookshelfRepository: BookshelfRepository) 
         _uiState.update { VolumeListUiState.Loading }
         _uiState.update {
             try {
-                val books = bookshelfRepository.getBooks(searchInput) ?: emptyList()
+                val books = bookshelfRepository.getBooks(searchInput) ?: throw Exception()
                 VolumeListUiState.Success(books)
             } catch (e: Exception) {
                 VolumeListUiState.Error
