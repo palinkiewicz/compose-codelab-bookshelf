@@ -81,7 +81,10 @@ fun BookInfoCardButtons(
     val uriHandler = LocalUriHandler.current
     val forSale = book.saleInfo.saleability == FOR_SALE_VALUE
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         if (forSale) {
             OutlinedButton(onClick = { uriHandler.openUri(book.volumeInfo.previewLink) }) {
                 Text(text = stringResource(R.string.preview))
