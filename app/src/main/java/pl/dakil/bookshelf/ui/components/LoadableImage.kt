@@ -24,14 +24,16 @@ import pl.dakil.bookshelf.R
 @Composable
 fun LoadableImage(
     imageUrl: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop,
+    contentDescription: String? = null
 ) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(context = LocalContext.current)
             .data(imageUrl)
             .crossfade(true)
             .build(),
-        contentDescription = null,
+        contentDescription = contentDescription,
         loading = {
             Box(modifier = Modifier.fillMaxWidth().aspectRatio(1f)) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -48,8 +50,7 @@ fun LoadableImage(
                 )
             }
         },
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
         modifier = modifier
-            .fillMaxWidth()
     )
 }

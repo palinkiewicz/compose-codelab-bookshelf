@@ -2,6 +2,7 @@ package pl.dakil.bookshelf.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +28,10 @@ fun BookCard(
         modifier = modifier,
         onClick = { onClick(book.id) }
     ) {
-        LoadableImage(imageUrl)
+        LoadableImage(
+            imageUrl,
+            modifier = Modifier.fillMaxWidth()
+        )
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.volume_card_data_padding))) {
             Text(
                 text = book.volumeInfo.title,
