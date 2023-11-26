@@ -2,7 +2,8 @@ package pl.dakil.bookshelf.data.model
 
 data class Book (
     val id: String,
-    val volumeInfo: VolumeInfo
+    val volumeInfo: VolumeInfo,
+    val saleInfo: SaleInfo
 ) {
     companion object {
         data class VolumeInfo (
@@ -23,5 +24,8 @@ data class Book (
                 )
             }
         }
+        data class SaleInfo (
+            val saleability: String
+        )
     }
 }
