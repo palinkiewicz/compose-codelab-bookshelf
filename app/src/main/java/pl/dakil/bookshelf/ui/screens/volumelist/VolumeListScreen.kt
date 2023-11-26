@@ -1,7 +1,6 @@
 package pl.dakil.bookshelf.ui.screens.volumelist
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +14,9 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Error
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,9 +58,11 @@ fun VolumeListScreen(
             is VolumeListUiState.Success -> {
                 VolumeListGrid(uiState = state, onListItemClick = onListItemClick)
             }
+
             is VolumeListUiState.Loading -> {
                 VolumeListLoading()
             }
+
             is VolumeListUiState.Error -> {
                 VolumeListError(onRetry = {
                     coroutineScope.launch {
@@ -81,7 +83,7 @@ fun VolumeListGrid(
     LazyVerticalStaggeredGrid(
         modifier = modifier,
         columns = StaggeredGridCells.Adaptive(dimensionResource(R.dimen.volume_list_item_size)),
-        verticalItemSpacing =  dimensionResource(R.dimen.volume_list_item_spacing),
+        verticalItemSpacing = dimensionResource(R.dimen.volume_list_item_spacing),
         horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.volume_list_item_spacing)),
         contentPadding = PaddingValues(dimensionResource(R.dimen.volume_list_content_padding))
     ) {
@@ -96,10 +98,15 @@ fun VolumeListGrid(
 
 @Composable
 fun VolumeListLoading(modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        CircularProgressIndicator()
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.medium_padding)))
         Text(
-            text = stringResource(R.string.volumes_loading),
-            modifier = Modifier.align(Alignment.Center)
+            text = stringResource(R.string.volumes_loading)
         )
     }
 }
@@ -109,18 +116,17 @@ fun VolumeListError(
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(imageVector = Icons.Default.Warning, contentDescription = null)
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_padding)))
-            Text(text = stringResource(R.string.volumes_loading_error))
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.medium_padding)))
-            Button(onClick = onRetry) {
-                Text(text = stringResource(R.string.retry))
-            }
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(imageVector = Icons.Outlined.Error, contentDescription = null)
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_padding)))
+        Text(text = stringResource(R.string.volumes_loading_error))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.medium_padding)))
+        Button(onClick = onRetry) {
+            Text(text = stringResource(R.string.retry))
         }
     }
 }

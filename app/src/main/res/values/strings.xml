@@ -3,8 +3,9 @@
     <string name="back">Go back</string>
     <string name="search">Search</string>
     <string name="search_volumes">Search volumes</string>
-    <string name="volumes_loading">Volumes loading…</string>
+    <string name="volumes_loading">Loading volumes…</string>
     <string name="volumes_loading_error">Error occurred loading volumes</string>
+    <string name="image_loading_error">Image failed to load</string>
     <string name="retry">Retry</string>
     <string name="unknown_author">Unknown author</string>
 </resources>
