@@ -10,9 +10,9 @@ data class Book (
             val title: String,
             val authors: List<String>?,
             val publisher: String,
-            val publishedDate: String,
-            val description: String,
-            val language: String,
+            val publishedDate: String?,
+            val description: String?,
+            val language: String?,
             val imageLinks: ImageLinks?,
             val previewLink: String,
             val canonicalVolumeLink: String
