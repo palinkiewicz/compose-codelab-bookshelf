@@ -12,7 +12,9 @@ data class Book (
             val publishedDate: String,
             val description: String,
             val language: String,
-            val imageLinks: ImageLinks?
+            val imageLinks: ImageLinks?,
+            val previewLink: String,
+            val canonicalVolumeLink: String
         ) {
             companion object {
                 data class ImageLinks (
