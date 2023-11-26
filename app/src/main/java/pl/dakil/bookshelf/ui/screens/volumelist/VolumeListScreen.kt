@@ -51,11 +51,9 @@ fun VolumeListScreen(
             is VolumeListUiState.Success -> {
                 VolumeListGrid(uiState = state, onListItemClick = onListItemClick)
             }
-
             is VolumeListUiState.Loading -> {
                 LoadingScreen(loadingText = stringResource(R.string.volumes_loading))
             }
-
             is VolumeListUiState.Error -> {
                 ErrorScreen(
                     errorText = stringResource(R.string.volumes_loading_error),
