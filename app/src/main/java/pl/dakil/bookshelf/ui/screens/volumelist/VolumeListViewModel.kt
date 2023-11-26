@@ -12,7 +12,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.dakil.bookshelf.BookshelfApplication
 import pl.dakil.bookshelf.data.repo.BookshelfRepository
@@ -30,15 +29,13 @@ class VolumeListViewModel(private val bookshelfRepository: BookshelfRepository) 
         searchInput = input
     }
 
-    suspend fun loadVolumes() = viewModelScope.launch {
-        _uiState.update { VolumeListUiState.Loading }
-        _uiState.update {
-            try {
-                val books = bookshelfRepository.getBooks(searchInput) ?: throw Exception()
-                VolumeListUiState.Success(books)
-            } catch (e: Exception) {
-                VolumeListUiState.Error
-            }
+    suspend fun loadVolumes(query: String? = null) = viewModelScope.launch {
+        _uiState.value = VolumeListUiState.Loading
+        _uiState.value = try {
+            val books = bookshelfRepository.getBooks(query ?: searchInput) ?: throw Exception()
+            VolumeListUiState.Success(books)
+        } catch (e: Exception) {
+            VolumeListUiState.Error
         }
     }
 
