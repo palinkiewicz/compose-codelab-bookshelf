@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pl.dakil.bookshelf.ui.screens.Screens
+import pl.dakil.bookshelf.ui.screens.volumedetails.VolumeDetailsScreen
 import pl.dakil.bookshelf.ui.screens.volumelist.VolumeListScreen
 
 @Composable
@@ -29,7 +30,7 @@ fun BookshelfNavHost(navController: NavHostController) {
             route = Screens.VolumeDetail.route,
             arguments = Screens.VolumeDetail.navArguments
         ) {
-            // VolumeDetail()
+            VolumeDetailsScreen(onNavigationBack = { navController.popBackStack() })
         }
     }
 }

@@ -17,5 +17,15 @@
     <string name="buy">Buy</string>
     <string name="more_info">More info</string>
 
+    <string name="title">Title</string>
+    <string name="publisher">Publisher</string>
+    <string name="unknown_publisher">Unknown publisher</string>
+    <string name="authors">Authors</string>
     <string name="unknown_author">Unknown author</string>
+    <string name="description">Description</string>
+    <string name="no_description">No description</string>
+    <string name="published_date">Published date</string>
+    <string name="language">Language</string>
+    <string name="unknown_date">Unknown date</string>
+    <string name="unknown_language">Unknown language</string>
 </resources>
