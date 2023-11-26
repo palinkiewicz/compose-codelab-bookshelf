@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import pl.dakil.bookshelf.BookshelfApplication
 import pl.dakil.bookshelf.data.model.Book
 import pl.dakil.bookshelf.data.repo.BookshelfRepository
@@ -22,9 +24,15 @@ class VolumeDetailsViewModel(
     val uiState: StateFlow<VolumeDetailsUiState>
         get() = _uiState.asStateFlow()
 
-    private val _bookId: String = checkNotNull(savedStateHandle["book_id"])
+    private val _bookId: String = checkNotNull(savedStateHandle["volumeId"])
 
-    suspend fun getBook(id: String? = null) {
+    init {
+        viewModelScope.launch {
+            getBook()
+        }
+    }
+
+    suspend fun getBook(id: String? = null) = viewModelScope.launch {
         _uiState.value = VolumeDetailsUiState.Loading
         _uiState.value = try {
             val book: Book = bookshelfRepository.getBook(id ?: _bookId) ?: throw Exception()
