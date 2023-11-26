@@ -35,7 +35,7 @@ fun BookCard(
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.volume_card_data_padding))) {
             Text(
                 text = book.volumeInfo.title,
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.titleMedium
             )
             Spacer(
                 modifier = Modifier.padding(dimensionResource(R.dimen.volume_card_data_between_padding))
