@@ -10,7 +10,7 @@ import pl.dakil.bookshelf.data.repo.DefaultBookshelfRepository
 import pl.dakil.bookshelf.fake.FakeBookshelfApiService
 import pl.dakil.bookshelf.fake.FakeVolumesDataSource
 
-class DefaultBookshelfRepositoryTests {
+class DefaultBookshelfRepositoryTest {
     private lateinit var repository: BookshelfRepository
 
     @Before
