@@ -79,7 +79,7 @@ fun VolumeDetailsScreen(
             uiState = uiState,
             onLoadingErrorRetry = {
                 coroutineScope.launch {
-                    viewModel.getBook()
+                    viewModel.loadBook()
                 }
             },
             modifier = Modifier.padding(it)

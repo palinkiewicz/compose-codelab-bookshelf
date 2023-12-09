@@ -1,5 +1,6 @@
 package pl.dakil.bookshelf.data.repo
 
+import android.accounts.NetworkErrorException
 import pl.dakil.bookshelf.data.model.Book
 import pl.dakil.bookshelf.data.network.BookshelfApiService
 
@@ -11,7 +12,7 @@ class DefaultBookshelfRepository(
             val response = apiService.getBooks(q)
 
             if (response.isSuccessful) response.body()?.items ?: emptyList()
-            else throw Exception(response.code().toString())
+            else throw NetworkErrorException(response.code().toString())
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -23,7 +24,7 @@ class DefaultBookshelfRepository(
             val response = apiService.getBook(id)
 
             if (response.isSuccessful) response.body()
-            else throw Exception(response.code().toString())
+            else throw NetworkErrorException(response.code().toString())
         } catch (e: Exception) {
             e.printStackTrace()
             null

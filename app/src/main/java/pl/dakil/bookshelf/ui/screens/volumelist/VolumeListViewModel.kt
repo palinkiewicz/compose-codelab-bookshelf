@@ -18,11 +18,11 @@ import pl.dakil.bookshelf.data.repo.BookshelfRepository
 
 class VolumeListViewModel(private val bookshelfRepository: BookshelfRepository) : ViewModel() {
     private var _uiState =
-        MutableStateFlow<VolumeListUiState>(VolumeListUiState.Success(emptyList()))
+        MutableStateFlow<VolumeListUiState>(INIT_UI_STATE)
     val uiState: StateFlow<VolumeListUiState>
         get() = _uiState.asStateFlow()
 
-    var searchInput by mutableStateOf("")
+    var searchInput by mutableStateOf(INIT_SEARCH_INPUT)
         private set
 
     fun updateSearchInput(input: String) {
@@ -40,6 +40,9 @@ class VolumeListViewModel(private val bookshelfRepository: BookshelfRepository) 
     }
 
     companion object {
+        val INIT_UI_STATE = VolumeListUiState.Success(emptyList())
+        const val INIT_SEARCH_INPUT = ""
+
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as BookshelfApplication
