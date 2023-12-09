@@ -46,44 +46,56 @@ class VolumeListViewModelTest {
     @Test
     fun volumeListViewModel_updateSearchInputAndLoadVolumes_updatesUiState() = runTest {
         val search = "ABC"
+        val expectedUiStateOnCall = VolumeListUiState.Loading
         val expectedVolumes = FakeVolumesDataSource.volumes.filter { it.volumeInfo.title.contains(search) }
-        val expectedUiState = VolumeListUiState.Success(expectedVolumes)
+        val expectedUiStateOnFinish = VolumeListUiState.Success(expectedVolumes)
 
         viewModel.updateSearchInput(search)
         viewModel.loadVolumes()
+        assertEquals(expectedUiStateOnCall, viewModel.uiState.value)
 
-        assertEquals(expectedUiState, viewModel.uiState.value)
+        testScheduler.advanceUntilIdle()
+        assertEquals(expectedUiStateOnFinish, viewModel.uiState.value)
     }
 
     @Test
     fun volumeListViewModel_updateSearchInputAndLoadVolumesError_updatesUiState() = runTest {
         val search = ""
-        val expectedUiState = VolumeListUiState.Error
+        val expectedUiStateOnCall = VolumeListUiState.Loading
+        val expectedUiStateOnFinish = VolumeListUiState.Error
 
         viewModel.updateSearchInput(search)
         viewModel.loadVolumes()
+        assertEquals(expectedUiStateOnCall, viewModel.uiState.value)
 
-        assertEquals(expectedUiState, viewModel.uiState.value)
+        testScheduler.advanceUntilIdle()
+        assertEquals(expectedUiStateOnFinish, viewModel.uiState.value)
     }
 
     @Test
     fun volumeListViewModel_loadVolumesFromProvidedSearch_updatesUiState() = runTest {
         val search = "ABC"
+        val expectedUiStateOnCall = VolumeListUiState.Loading
         val expectedVolumes = FakeVolumesDataSource.volumes.filter { it.volumeInfo.title.contains(search) }
-        val expectedUiState = VolumeListUiState.Success(expectedVolumes)
+        val expectedUiStateOnFinish = VolumeListUiState.Success(expectedVolumes)
 
         viewModel.loadVolumes(search)
+        assertEquals(expectedUiStateOnCall, viewModel.uiState.value)
 
-        assertEquals(expectedUiState, viewModel.uiState.value)
+        testScheduler.advanceUntilIdle()
+        assertEquals(expectedUiStateOnFinish, viewModel.uiState.value)
     }
 
     @Test
     fun volumeListViewModel_loadVolumesFromProvidedSearchError_updatesUiState() = runTest {
         val search = ""
-        val expectedUiState = VolumeListUiState.Error
+        val expectedUiStateOnCall = VolumeListUiState.Loading
+        val expectedUiStateOnFinish = VolumeListUiState.Error
 
         viewModel.loadVolumes(search)
+        assertEquals(expectedUiStateOnCall, viewModel.uiState.value)
 
-        assertEquals(expectedUiState, viewModel.uiState.value)
+        testScheduler.advanceUntilIdle()
+        assertEquals(expectedUiStateOnFinish, viewModel.uiState.value)
     }
 }
