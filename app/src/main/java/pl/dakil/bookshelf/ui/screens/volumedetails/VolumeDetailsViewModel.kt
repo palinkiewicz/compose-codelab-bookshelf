@@ -20,7 +20,7 @@ class VolumeDetailsViewModel(
     savedStateHandle: SavedStateHandle,
     private val bookshelfRepository: BookshelfRepository
 ) : ViewModel() {
-    private var _uiState = MutableStateFlow<VolumeDetailsUiState>(VolumeDetailsUiState.Loading)
+    private var _uiState = MutableStateFlow<VolumeDetailsUiState>(INIT_UI_STATE)
     val uiState: StateFlow<VolumeDetailsUiState>
         get() = _uiState.asStateFlow()
 
@@ -43,6 +43,8 @@ class VolumeDetailsViewModel(
     }
 
     companion object {
+        val INIT_UI_STATE = VolumeDetailsUiState.Loading
+
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as BookshelfApplication
