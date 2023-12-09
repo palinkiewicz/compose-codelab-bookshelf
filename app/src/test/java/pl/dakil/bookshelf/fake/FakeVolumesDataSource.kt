@@ -2,10 +2,10 @@ package pl.dakil.bookshelf.fake
 
 import pl.dakil.bookshelf.data.model.Book
 
-const val NOT_FOR_SALE = "NOT_FOR_SALE"
-const val FOR_SALE = "FOR_SALE"
-
 object FakeVolumesDataSource {
+    private const val NOT_FOR_SALE = "NOT_FOR_SALE"
+    private const val FOR_SALE = "FOR_SALE"
+
     val volumes = listOf(
         Book(
             id = "0ABC",
