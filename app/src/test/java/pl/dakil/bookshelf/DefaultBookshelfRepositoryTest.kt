@@ -24,6 +24,7 @@ class DefaultBookshelfRepositoryTest {
         val books = repository.getBooks(search)
         val expectedBooks =
             FakeVolumesDataSource.volumes.filter { it.volumeInfo.title.contains(search) }
+
         assertEquals(expectedBooks, books)
     }
 
@@ -32,6 +33,7 @@ class DefaultBookshelfRepositoryTest {
         val search = ""
         val books = repository.getBooks(search)
         val expectedBooks: List<Book>? = null
+
         assertEquals(expectedBooks, books)
     }
 
@@ -40,6 +42,7 @@ class DefaultBookshelfRepositoryTest {
         val id = FakeVolumesDataSource.volumes.last().id
         val book = repository.getBook(id)
         val expectedBook = FakeVolumesDataSource.volumes.first { it.id == id }
+
         assertEquals(expectedBook, book)
     }
 
@@ -48,6 +51,7 @@ class DefaultBookshelfRepositoryTest {
         val id = ""
         val book = repository.getBook(id)
         val expectedBook: Book? = null
+
         assertEquals(expectedBook, book)
     }
 }
