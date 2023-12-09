@@ -10,11 +10,8 @@ class DefaultBookshelfRepository(
         return try {
             val response = apiService.getBooks(q)
 
-            if (response.isSuccessful) {
-                response.body()?.items ?: emptyList()
-            } else {
-                emptyList()
-            }
+            if (response.isSuccessful) response.body()?.items ?: emptyList()
+            else throw Exception(response.code().toString())
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -25,11 +22,8 @@ class DefaultBookshelfRepository(
         return try {
             val response = apiService.getBook(id)
 
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-                null
-            }
+            if (response.isSuccessful) response.body()
+            else throw Exception(response.code().toString())
         } catch (e: Exception) {
             e.printStackTrace()
             null
