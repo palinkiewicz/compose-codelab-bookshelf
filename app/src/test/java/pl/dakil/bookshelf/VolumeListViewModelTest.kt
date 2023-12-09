@@ -4,14 +4,19 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
+import org.junit.Rule
 import pl.dakil.bookshelf.data.repo.DefaultBookshelfRepository
 import pl.dakil.bookshelf.fake.FakeBookshelfApiService
 import pl.dakil.bookshelf.fake.FakeVolumesDataSource
+import pl.dakil.bookshelf.rules.TestDispatcherRule
 import pl.dakil.bookshelf.ui.screens.volumelist.VolumeListUiState
 import pl.dakil.bookshelf.ui.screens.volumelist.VolumeListViewModel
 
 class VolumeListViewModelTest {
     private lateinit var viewModel: VolumeListViewModel
+
+    @get:Rule
+    val testDispatcher = TestDispatcherRule()
 
     @Before
     fun initializeVolumeListViewModel() {
