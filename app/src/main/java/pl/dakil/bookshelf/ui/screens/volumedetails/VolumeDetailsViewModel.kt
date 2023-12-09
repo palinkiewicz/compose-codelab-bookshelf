@@ -28,11 +28,11 @@ class VolumeDetailsViewModel(
 
     init {
         viewModelScope.launch {
-            getBook()
+            loadBook()
         }
     }
 
-    suspend fun getBook(id: String? = null) = viewModelScope.launch {
+    suspend fun loadBook(id: String? = null) = viewModelScope.launch {
         _uiState.value = VolumeDetailsUiState.Loading
         _uiState.value = try {
             val book: Book = bookshelfRepository.getBook(id ?: _bookId) ?: throw Exception()
