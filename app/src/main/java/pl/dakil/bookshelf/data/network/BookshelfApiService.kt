@@ -13,5 +13,4 @@ interface BookshelfApiService {
 
     @GET("volumes/{id}")
     suspend fun getBook(@Path("id") id: String): Response<Book>
-
 }
